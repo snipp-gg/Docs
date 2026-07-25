@@ -4687,7 +4687,7 @@
           },
           "usage": {
             "type": "object",
-            "description": "Weekly usage limit state. The window is a fixed 7-day period anchored to your first upload after each reset, and fully resets once 7 days pass.",
+            "description": "Weekly usage limit state. The window is a fixed 7-day period on a per-account schedule assigned at signup, and fully resets at that same day and time each week.",
             "properties": {
               "used": {
                 "type": "integer",
@@ -4707,7 +4707,7 @@
                   "null"
                 ],
                 "format": "date-time",
-                "description": "ISO timestamp when the current window started. `null` if you have never uploaded or the previous window expired without activity."
+                "description": "ISO timestamp when the current window started, derived from the account's fixed reset schedule. Present even when nothing has been uploaded yet."
               },
               "windowEnd": {
                 "type": [
@@ -4715,14 +4715,14 @@
                   "null"
                 ],
                 "format": "date-time",
-                "description": "ISO timestamp when the current window ends and usage resets. `null` if `windowStart` is `null`."
+                "description": "ISO timestamp when the current window ends and usage resets. This is the account's fixed reset moment, the same day and time every week."
               },
               "resetsInSeconds": {
                 "type": [
                   "integer",
                   "null"
                 ],
-                "description": "Seconds until the current window resets. `null` if `windowStart` is `null`."
+                "description": "Seconds until the current window resets."
               }
             },
             "required": [

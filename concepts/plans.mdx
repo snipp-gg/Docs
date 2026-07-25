@@ -21,9 +21,9 @@ Snipp offers three tiers to suit different needs. All plans include full API acc
 
 ## Weekly Usage Limit
 
-Each plan has a 7-day upload quota anchored to your first upload after each reset. The window opens the moment you upload, and usage accumulates from there. Once 7 days pass from the window start, the entire counter resets to zero at once, and a fresh window opens on your next upload.
+Each plan has a 7-day upload quota. Your account is assigned a fixed reset day and time when you sign up, and that slot never moves. Once a week, at that exact moment, the entire counter returns to zero.
 
-The window does not slide. It is a fixed 7-day window from first use that fully resets, not a continuous tally of the last seven days. Inactivity does not stack quota, but it also does not penalize you. The window simply re-anchors on your next upload.
+The window does not slide, and it does not depend on when you upload. It is not a continuous tally of the last seven days, and an idle week neither stacks quota nor delays your reset. Unused allowance does not carry over. You can see your next reset in Settings under Billing.
 
 Failed uploads do not count against the limit. Only successfully stored files consume bytes.
 
@@ -47,7 +47,7 @@ A video's **duration** counts against the budget, not its file size. Only videos
   There is a **60-minute** per-video cap. Videos longer than 60 minutes always play in standard quality regardless of how much budget you have left.
 </Note>
 
-The priority-minutes budget uses a rolling 30-day window: it is anchored to first use and fully resets after 30 days.
+The priority-minutes budget uses a 30-day window on a fixed schedule: your account is assigned a reset date and time at signup, and the full budget returns every 30 days at that moment whether or not you stream.
 
 When your monthly budget runs out, videos still upload and play normally. They simply fall back to standard quality instead of priority streaming, with no block or error.
 
@@ -95,9 +95,9 @@ Call `GET /users/@me` to see your current plan status and weekly storage usage. 
 | `limits.usage.used` | Bytes uploaded in the current window |
 | `limits.usage.limit` | Total bytes allowed per window |
 | `limits.usage.usedPercent` | Percentage of the weekly cap consumed, rounded to the nearest integer (0–100+) |
-| `limits.usage.windowStart` | When the current window started, or `null` if there is no active window |
-| `limits.usage.windowEnd` | When the current window resets, or `null` if there is no active window |
-| `limits.usage.resetsInSeconds` | Seconds until the current window resets, or `null` if there is no active window |
+| `limits.usage.windowStart` | When the current window started, derived from the account's fixed reset schedule |
+| `limits.usage.windowEnd` | When the current window resets: the account's fixed reset moment, the same day and time every week |
+| `limits.usage.resetsInSeconds` | Seconds until the current window resets |
 
 ## Teams
 
@@ -106,7 +106,7 @@ Enterprise accounts can create **Teams**: shared workspaces with their own galle
 - An Enterprise user can create up to **3 teams**.
 - Each team holds up to **100 members**, including the owner.
 - Only **Enterprise** users can create or join a team.
-- Each team has its own 7-day **50 GB** quota, separate from any member's personal quota. It follows the same fixed-window model: anchored to the team's first upload and fully reset after 7 days. Uploads to a team never count against a member's personal limit.
+- Each team has its own 7-day **50 GB** quota, separate from any member's personal quota. It follows the same fixed-schedule model: the team has its own reset day and time, and the full quota returns at that moment every week. Uploads to a team never count against a member's personal limit.
 - Team posts can be **unlisted** or **private** only. They never appear on Discover, and have no likes or views.
 - Only members of a team can view or comment on that team's posts.
 
