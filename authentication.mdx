@@ -68,6 +68,7 @@ Key differences when uploading with a team key:
 - Uploads count against the **team's** weekly quota, never a member's personal quota.
 - Team-key uploads are always created **private**, regardless of the `post-privacy` header. You can change a post to **unlisted** afterward; team posts are never **public**.
 - Only the team owner can regenerate or delete the key, from the team's settings page.
+- If the team's subscription lapses, uploads with the key return `403`. Reading, editing, and deleting existing team posts keep working.
 
 Anyone who holds a team key can upload with it, so treat it like any other credential and share it only with trusted team members.
 
