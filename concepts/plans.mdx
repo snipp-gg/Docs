@@ -104,10 +104,10 @@ Call `GET /users/@me` to see your current plan status and weekly storage usage. 
 Enterprise accounts can create **Teams**: shared workspaces with their own gallery, upload quota, and access key.
 
 - An Enterprise user can create up to **3 teams**.
-- Each team holds up to **10 members**, including the owner.
-- Only **Enterprise** users can create or join a team.
+- Each team holds up to **10 members** by default, including the owner. Enterprise plans can be issued with a different seat count.
+- Only **Enterprise** users can create a team. Members can be on any plan, including Free: the team's subscription covers every seat, and uploads to a team use the team's limits rather than the member's own.
 - A user can belong to at most **10 teams**, and each team can hold at most **5** active invite links at a time.
-- Each team has its own 7-day **50 GB** quota, separate from any member's personal quota. It follows the same fixed-schedule model: the team has its own reset day and time, and the full quota returns at that moment every week. Uploads to a team never count against a member's personal limit.
+- Each team has its own 7-day quota, separate from any member's personal quota: **20 GB per member**, with a floor of **50 GB**. A team of 3 gets 60 GB per week, a full team of 10 gets 200 GB. It follows the same fixed-schedule model: the team has its own reset day and time, and the full quota returns at that moment every week. Uploads to a team never count against a member's personal limit.
 - Team posts can be **unlisted** or **private** only. They never appear on Discover, and have no likes or views.
 - Only members of a team can view or comment on that team's posts.
 
