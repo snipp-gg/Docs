@@ -1049,7 +1049,7 @@
             }
           },
           "403": {
-            "description": "No permission to access recent uploads",
+            "description": "Account suspended or no permission to access recent uploads",
             "content": {
               "application/json": {
                 "schema": {
