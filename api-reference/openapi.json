@@ -580,7 +580,7 @@
     "/upload": {
       "post": {
         "summary": "Upload File(s)",
-        "description": "Upload 1-9 image or video files. Supports PNG, JPG, WebP, GIF, MP4, MOV, and MKV. Every upload automatically creates a post. When sending multiple files, they are grouped into an album by default. File size limits depend on your plan. See [Plans](/concepts/plans) for details.",
+        "description": "Upload 1-50 image or video files. Supports PNG, JPG, WebP, GIF, MP4, MOV, and MKV. Every upload automatically creates a post. When sending multiple files, they are grouped into an album by default. File size limits depend on your plan. See [Plans](/concepts/plans) for details.",
         "operationId": "upload",
         "parameters": [
           {
@@ -663,7 +663,7 @@
                   "file": {
                     "type": "string",
                     "format": "binary",
-                    "description": "1-9 image or video files. Use multiple `file` fields for multi-file uploads."
+                    "description": "1-50 image or video files. Use multiple `file` fields for multi-file uploads."
                   }
                 }
               }
@@ -1267,7 +1267,7 @@
     "/appendUpload": {
       "post": {
         "summary": "Add to Album",
-        "description": "Add one or more files to an existing album post (max 9 files total). New files inherit the post's privacy. You must own the post.",
+        "description": "Add one or more files to an existing album post (max 50 files total). New files inherit the post's privacy. You must own the post.",
         "operationId": "appendUpload",
         "parameters": [
           {
@@ -1429,7 +1429,7 @@
             }
           },
           "400": {
-            "description": "Missing/invalid post-code, no file, album already full, would exceed 9-file cap, or all files failed",
+            "description": "Missing/invalid post-code, no file, album already full, would exceed 50-file cap, or all files failed",
             "content": {
               "application/json": {
                 "schema": {

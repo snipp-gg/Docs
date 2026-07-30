@@ -23,7 +23,7 @@ Rate limits protect Snipp from abuse and keep performance consistent for everyon
 | `GET /analytics` | 30 requests | Per minute |
 | `GET /gifs` | 60 requests per IP | Per minute |
 
-`POST /upload` also has an abuse safeguard. Sending 8 or more uploads within one second suspends your account. Suspended accounts lose upload access and must contact support to appeal.
+`POST /upload` also has an abuse safeguard. Sending more than 8 uploads within one second suspends your account. Suspended accounts lose upload access and must contact support to appeal. Team API keys are throttled with a `429` instead of being suspended.
 
 ## Relay Limits
 
@@ -67,6 +67,7 @@ Rate-limited responses include headers to help you track your usage:
 | `X-RateLimit-Limit` | Maximum requests allowed per window |
 | `X-RateLimit-Remaining` | Requests remaining in the current window |
 | `X-RateLimit-Reset` | Unix timestamp (seconds) when the window resets |
+| `Retry-After` | Seconds to wait before retrying. Sent on `429` responses only |
 
 Endpoints with no limit do not include these headers.
 
@@ -102,7 +103,7 @@ Check your remaining usage anytime via `GET /users/@me` (`limits.usage`).
     Check for HTTP status `429` in your API responses.
   </Step>
   <Step title="Wait until reset">
-    Use the `X-RateLimit-Reset` header to calculate how long to wait before retrying.
+    Use the `Retry-After` header on the `429` as the wait time in seconds, or calculate it from `X-RateLimit-Reset`.
   </Step>
   <Step title="Use exponential backoff">
     If requests continue to fail, double the wait time with each retry (for example, 1s, 2s, 4s, 8s).
