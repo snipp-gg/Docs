@@ -47,14 +47,14 @@ Submit a report for a comment using its ID. An optional reason can be provided t
 
 | Code | Error | When |
 |------|-------|------|
-| `400` | Invalid comment | `commentId` is empty, missing, or not a valid ID |
-| `400` | Reason too long | `reason` exceeds 200 characters |
-| `403` | You cannot report your own comment | The comment is yours |
-| `403` | Comments are disabled on moderated posts | The post has been moderated |
-| `403` | You cannot report this comment | The comment author has blocked you |
-| `404` | Comment not found | The comment does not exist |
-| `404` | Post not found | The post does not exist, is private or a draft you do not own, or belongs to a team you are not in |
-| `429` | Rate limit exceeded | Too many requests |
+| `400` | Invalid comment. | `commentId` is empty, missing, or not a valid ID |
+| `400` | Reason cannot exceed 200 characters. | `reason` exceeds 200 characters |
+| `403` | You cannot report your own comment. | The comment is yours |
+| `403` | Comments are disabled on moderated posts. | The post has been moderated |
+| `403` | You cannot report this comment. | The comment author has blocked you |
+| `404` | Comment not found. | The comment does not exist |
+| `404` | Post not found. | The post does not exist, is private or a draft you do not own, or belongs to a team you are not in |
+| `429` | Rate limit exceeded. Please try again later. | Too many requests |
 
 ## Examples
 
