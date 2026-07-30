@@ -45,8 +45,8 @@ Submit a report for a post using its share code. An optional reason can be provi
 | `400` | Reason cannot exceed 200 characters. | `reason` exceeds 200 characters |
 | `403` | This post has already been moderated. | The post has already been actioned by moderators |
 | `403` | You cannot report your own post. | `code` belongs to a post you own |
-| `403` | You cannot report this post. | A block exists between you and the post author |
-| `404` | Post not found. | Post does not exist or is private |
+| `403` | You cannot report this post. | The post author has blocked you |
+| `404` | Post not found. | Post does not exist, or is private or a draft |
 | `429` | Rate limit exceeded. Please try again later. | Too many requests |
 
 ## Examples
