@@ -48,6 +48,7 @@ The Relay API matches the limits above for shared endpoints, with these addition
 | `POST /comment` | 5 requests | Per minute, shared with `DELETE /comment` |
 | `DELETE /comment` | 5 requests | Per minute, shared with `POST /comment` |
 | `POST /comment-like` | 30 requests | Per minute, shared with `POST /like` |
+| `POST /report-comment` | 3 requests | Per minute, shared with `POST /report-post` and `POST /report-user` |
 | `GET /notifications` | 60 requests | Per minute |
 | `GET /notifications/unread` | 60 requests | Per minute |
 | `POST /notifications/read` | 60 requests | Per minute |

@@ -159,6 +159,7 @@
               "relay-reference/endpoint/comment-create",
               "relay-reference/endpoint/comment-delete",
               "relay-reference/endpoint/comment-like",
+              "relay-reference/endpoint/report-comment",
               "relay-reference/endpoint/report-post"
             ]
           },
