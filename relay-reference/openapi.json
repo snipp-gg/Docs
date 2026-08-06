@@ -4735,7 +4735,7 @@
               "null"
             ],
             "format": "date-time",
-            "description": "When the paid subscription began. `null` for free or gifted plans."
+            "description": "When the paid subscription began. `null` for free plans, and for gifted plans with no subscription behind them."
           },
           "expires_at": {
             "type": [
@@ -4747,7 +4747,7 @@
           },
           "cancel_at_period_end": {
             "type": "boolean",
-            "description": "True when the user has canceled but still has access until `expires_at`. Always false for gifted plans."
+            "description": "True when the user has canceled but still has access until `expires_at`. False for gifted plans with no subscription behind them."
           },
           "gifted": {
             "type": "boolean",
