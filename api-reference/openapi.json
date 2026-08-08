@@ -8,15 +8,19 @@
   "servers": [
     {
       "url": "https://api.snipp.gg",
-      "description": "Default. Proxied and load-balanced through Cloudflare. Capped at 100 MB per upload."
+      "description": "Default. Load-balanced across regions. No upload cap."
     },
     {
       "url": "https://eu-west-1.api.snipp.gg",
-      "description": "EU West regional endpoint. Unproxied, no 100 MB upload cap."
+      "description": "EU West regional endpoint. Pins uploads and storage to EU West."
     },
     {
       "url": "https://us-west-1.api.snipp.gg",
-      "description": "US West regional endpoint. Unproxied, no 100 MB upload cap."
+      "description": "US West regional endpoint. Pins uploads and storage to US West."
+    },
+    {
+      "url": "https://flux.snipp.gg",
+      "description": "Alternative host. Capped at 100 MB per upload."
     }
   ],
   "security": [

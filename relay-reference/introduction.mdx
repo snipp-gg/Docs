@@ -17,20 +17,24 @@ The default base URL is:
 relay.snipp.gg
 ```
 
-`relay.snipp.gg` is proxied and load-balanced through Cloudflare. It picks the closest healthy region for you, so it's the fastest option for most requests. Because Cloudflare proxies the traffic, uploads on this host are capped at **100 MB per request**.
+`relay.snipp.gg` is a load balancer sitting in front of the Relay servers. It resolves to the nearest healthy region and connects straight to it, with no per-request size cap, so your file size limit is whatever your plan allows. It is the right default for everything, including uploads.
 
 ### Regional endpoints
-
-For uploads larger than 100 MB (or when you want to pin a specific region), use a regional endpoint instead. Regional endpoints are unproxied, so there is no 100 MB cap. Your file size limit is whatever your plan allows.
 
 | Region | Host |
 |--------|------|
 | EU West | `eu-west-1.relay.snipp.gg` |
 | US West | `us-west-1.relay.snipp.gg` |
 
-You can mix and match. Use `relay.snipp.gg` for everyday calls and switch to a regional endpoint only when an upload exceeds 100 MB.
+Regional endpoints reach the same servers as `relay.snipp.gg` and upload at the same speed, so pinning one buys you no performance. Use them when you want to control which region stores your files, or to force a specific server instead of letting the load balancer choose.
 
 To confirm which region served a request, hit [`GET /region`](/relay-reference/endpoint/region) on any host.
+
+### Alternative endpoint
+
+`pulsar.snipp.gg` serves the same Relay API over a separate network path. Requests are buffered before they reach the server, so uploads there are capped at **100 MB per request** and large uploads are several times slower.
+
+Use it only as a fallback if `relay.snipp.gg` is ever unreachable.
 
 ## Authentication
 

@@ -106,7 +106,7 @@ print(res.json()["url"])
 </CodeGroup>
 
 <Note>
-  These examples use `api.snipp.gg` for simplicity. For production uploads, use a regional endpoint such as `eu-west-1.api.snipp.gg` instead. Regional hosts are unproxied, so they are faster for uploads and have no 100 MB per-request cap. See [Regional endpoints](/api-reference/introduction#regional-endpoints).
+  These examples use `api.snipp.gg`, which is the right host for production uploads too. It connects straight to the nearest upload server with no per-request size cap. Pin a regional endpoint such as `eu-west-1.api.snipp.gg` only when you want to control which region stores your files. See [Regional endpoints](/api-reference/introduction#regional-endpoints).
 </Note>
 
 The response includes a direct URL to your file and a post object with share metadata:

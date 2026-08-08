@@ -17,7 +17,7 @@ The default base URL is:
 api.snipp.gg
 ```
 
-`api.snipp.gg` is proxied and load-balanced through Cloudflare. It routes you to the closest healthy region and sits behind Cloudflare's WAF and DDoS protection, which makes it the right default for ordinary API calls. Because Cloudflare proxies the traffic, uploads on this host are capped at **100 MB per request**.
+`api.snipp.gg` is a load balancer sitting in front of the upload servers. It resolves to the nearest healthy region and connects straight to it, with no per-request size cap, so your file size limit is whatever your plan allows. It is the right default for everything, including uploads.
 
 ### Regional endpoints
 
@@ -26,20 +26,19 @@ api.snipp.gg
 | EU West | `eu-west-1.api.snipp.gg` |
 | US West | `us-west-1.api.snipp.gg` |
 
-Regional endpoints are unproxied. They connect straight to the upload servers, so there is no 100 MB cap and your file size limit is whatever your plan allows.
+Regional endpoints reach the same servers as `api.snipp.gg` and upload at the same speed, so pinning one buys you no performance. Use them when you want to control which region stores your files, or to force a specific server instead of letting the load balancer choose.
 
-**Use a regional endpoint for uploads.** Cloudflare buffers the entire request body at its edge before forwarding it, so proxied uploads pay a cost that grows with file size. Uploading an 8 MB file through `api.snipp.gg` can take several times longer than the same upload to a regional host. For small, non-upload calls the difference is negligible and `api.snipp.gg` is the simpler choice.
-
-To pick the right region automatically, call [`GET /region`](/api-reference/endpoint/region) on `api.snipp.gg` once at startup. It returns the region Cloudflare routed you to, which is the one nearest you. Use that host for uploads from then on.
+To see which region you are being routed to, call [`GET /region`](/api-reference/endpoint/region) on any host.
 
 ```bash
-REGION=$(curl -s https://api.snipp.gg/region | jq -r .region)
-curl -X POST "https://$REGION.api.snipp.gg/upload" \
-  -H "api-key: YOUR_API_KEY" \
-  -F "file=@screenshot.png"
+curl -s https://api.snipp.gg/region
 ```
 
-To confirm which region served any request, hit [`GET /region`](/api-reference/endpoint/region) on that host.
+### Alternative endpoint
+
+`flux.snipp.gg` serves the same API over a separate network path. Requests are buffered before they reach the server, so uploads there are capped at **100 MB per request** and large uploads are several times slower.
+
+Use it only as a fallback if `api.snipp.gg` is ever unreachable. For normal use, stay on `api.snipp.gg`.
 
 ## Authentication
 
