@@ -45,14 +45,16 @@ data = res.json()
 
 ### API Key Permissions
 
-Not all API keys have the same permissions. Each key clearly indicates whether upload access is enabled:
+Every key can upload. Reaching the uploads already in your gallery is a separate permission, off by default:
 
 | Permission | Description |
 |------------|-------------|
-| **Read** | Fetch your profile, list uploads, browse Discover. Always enabled. |
-| **Upload** | Upload files and delete uploads. Can be toggled in settings. |
+| **Base** | Upload files, fetch your profile, read posts, browse Discover. Always enabled. |
+| **Gallery** | List, edit, append to, and delete uploads you already have. Off by default. Turn it on with the **Gallery Access** switch in the API section of settings. |
 
-You can check your key's permissions by calling `GET /users/@me` and reviewing the `keyHasUploadsAccess` field.
+Without gallery access, `GET /uploads`, `PATCH /editUpload`, `POST /appendUpload` and `DELETE /deleteUpload` return `403`. `POST /upload` is unaffected.
+
+You can check whether gallery access is enabled by calling `GET /users/@me` and reviewing the `keyHasUploadsAccess` field. The field name is historical and reports gallery access.
 
 ### Team Access Keys
 
