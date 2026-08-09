@@ -1565,6 +1565,10 @@
                           "url": {
                             "type": "string"
                           },
+                          "thumbnailUrl": {
+                            "type": "string",
+                            "description": "Thumbnail URL. Only present when the post has a thumbnail."
+                          },
                           "code": {
                             "type": "string"
                           },
