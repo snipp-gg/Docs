@@ -48,6 +48,24 @@ Generate, regenerate, or delete your relay key from [snipp.gg/settings/relay](ht
 
 A missing, empty, or unrecognized relay key returns `401`.
 
+### Team Access Keys
+
+[Teams](/concepts/plans#teams) (an Enterprise feature) each have a dedicated **access key**. Pass it in the `relay-key` header in place of a personal relay key, and uploads go to the team's shared gallery instead of a personal account. It works on `/upload`, `/appendUpload`, `/editUpload`, and `/deleteUpload`; every other endpoint is personal only and returns `401` for a team key.
+
+```
+relay-key: YOUR_TEAM_ACCESS_KEY
+```
+
+Key differences when uploading with a team key:
+
+- Files are stored in the **team gallery**, not a personal gallery.
+- Uploads count against the **team's** weekly quota, never a member's personal quota.
+- Team-key uploads are always created **private**, regardless of the `post-privacy` header, and their privacy cannot be changed afterward. Team posts are never **unlisted** or **public**.
+- Only the team owner can regenerate or delete the key, from the team's settings page.
+- If the team's subscription lapses, uploads with the key return `403`. Editing and deleting existing team posts keep working.
+
+Anyone who holds a team key can upload with it, so treat it like any other credential and share it only with trusted team members.
+
 ## Endpoints
 
 | Method | Endpoint | Description |

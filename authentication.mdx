@@ -66,9 +66,11 @@ Key differences when uploading with a team key:
 
 - Files are stored in the **team gallery**, not a personal gallery.
 - Uploads count against the **team's** weekly quota, never a member's personal quota.
-- Team-key uploads are always created **private**, regardless of the `post-privacy` header. You can change a post to **unlisted** afterward; team posts are never **public**.
+- Team-key uploads are always created **private**, regardless of the `post-privacy` header, and their privacy cannot be changed afterward. Team posts are never **unlisted** or **public**.
 - Only the team owner can regenerate or delete the key, from the team's settings page.
 - If the team's subscription lapses, uploads with the key return `403`. Reading, editing, and deleting existing team posts keep working.
+
+The same key also works on the [Relay API](/relay-reference/introduction), passed in its `relay-key` header, on `/upload`, `/appendUpload`, `/editUpload`, and `/deleteUpload`.
 
 Anyone who holds a team key can upload with it, so treat it like any other credential and share it only with trusted team members.
 
