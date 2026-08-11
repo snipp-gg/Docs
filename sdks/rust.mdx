@@ -36,6 +36,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
+### Regional endpoints
+
+Use `with_region` to pin the client to a specific regional host. Uploads run at the same speed either way; this controls which region stores your files.
+
+```rust
+let client = SnippClient::with_region("YOUR_API_KEY", "eu-west-1")?; // or "us-west-1"
+```
+
 ## Methods
 
 All methods are `async` and return `Result<T, SnippError>`.
@@ -69,7 +77,7 @@ println!("{:?}", post.post.url);
 
 ### `upload(path, options)`
 
-Upload a file from disk.
+Upload a file from disk. `privacy` defaults to `private` when omitted.
 
 ```rust
 use snipp::{Privacy, UploadOptions};
@@ -93,7 +101,7 @@ let uploads = client.list_uploads(Some(100)).await?;
 
 ### `edit_upload(code, options)`
 
-Edit an existing upload's title, description, or privacy.
+Edit an existing upload's title, description, or privacy. Empty strings clear the title or description.
 
 ```rust
 use snipp::{EditUploadOptions, Privacy};
@@ -140,9 +148,24 @@ client.report_post("AbC123", "Spam").await?;
 
 All errors are returned as `SnippError`, which covers API errors, HTTP errors, local input validation, deserialization failures, and IO errors.
 
+`SnippError::Api` carries `status`, `message`, and `body`. `body` is the parsed JSON error response, or `None` when the response was not JSON. It carries the fields the API sends alongside `error`, such as `suspended` on a suspended user or `moderated` on a moderated post.
+
 ```rust
-match client.get_user("nonexistent", None).await {
+use snipp::SnippError;
+
+match client.get_user("987654321098765432", None).await {
     Ok(user) => println!("{:?}", user),
+    Err(SnippError::Api { status, message, body }) => {
+        let suspended = body
+            .as_ref()
+            .and_then(|b| b.get("suspended")?.as_bool())
+            .unwrap_or(false);
+        if suspended {
+            eprintln!("user is suspended");
+        } else {
+            eprintln!("{status}: {message}");
+        }
+    }
     Err(e) => eprintln!("Error: {e}"),
 }
 ```

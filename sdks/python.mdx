@@ -29,6 +29,14 @@ me = client.get_user("@me")
 print(me["user"]["username"])
 ```
 
+### Regional endpoints
+
+Pass `region` to pin the client to a specific regional host. Uploads run at the same speed either way; this controls which region stores your files.
+
+```python
+client = SnippClient(api_key="YOUR_API_KEY", region="eu-west-1")  # or "us-west-1"
+```
+
 ## Methods
 
 ### `get_user(user_id, include_posts=None, posts_limit=None)`
@@ -134,13 +142,16 @@ client.report_post("AbC123", "Spam")
 
 ## Error Handling
 
-All API errors raise a `SnippError` with `status` and `message` attributes.
+All API errors raise a `SnippError` with `status`, `message`, and `body` attributes. `body` is the parsed JSON error response, or `None` when the response was not JSON. It carries the fields the API sends alongside `error`, such as `suspended` on a suspended user or `moderated` on a moderated post.
 
 ```python
 from snipp import SnippClient, SnippError
 
 try:
-    client.get_user("nonexistent")
+    client.get_user("987654321098765432")
 except SnippError as err:
-    print(err.status, err.message)
+    if err.body and err.body.get("suspended"):
+        print(f"{err.body['username']} is suspended")
+    else:
+        print(err.status, err.message)
 ```

@@ -29,6 +29,17 @@ const me = await client.getUser("@me");
 console.log(me.user.username);
 ```
 
+### Regional endpoints
+
+Pass `region` to pin the client to a specific regional host. Uploads run at the same speed either way; this controls which region stores your files.
+
+```javascript
+const client = new SnippClient({
+  apiKey: process.env.SNIPP_API_KEY,
+  region: "eu-west-1", // or "us-west-1"
+});
+```
+
 ## Methods
 
 ### `getUser(id, options?)`
@@ -59,7 +70,7 @@ Upload a file. Accepts a `File`, `Blob`, `Buffer`, or `Uint8Array`.
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `privacy` | `"public" \| "unlisted" \| "private"` | Visibility of the upload. |
+| `privacy` | `"public" \| "unlisted" \| "private"` | Visibility of the upload. Defaults to `private` when omitted. |
 | `filename` | `string` | Filename sent with the upload (defaults to `"upload"`). |
 | `title` | `string` | Optional post title (max 30 chars). |
 | `description` | `string` | Optional post description (max 200 chars). |
@@ -139,16 +150,20 @@ await client.reportPost("AbC123", "Spam");
 
 ## Error Handling
 
-All API errors throw a `SnippError` with `status` and `message` properties.
+All API errors throw a `SnippError` with `status`, `message`, and `body` properties. `body` is the parsed JSON error response, or `null` when the response was not JSON. It carries the fields the API sends alongside `error`, such as `suspended` on a suspended user or `moderated` on a moderated post.
 
 ```javascript
 import { SnippClient, SnippError } from "@snipp-gg/snipp";
 
 try {
-  await client.getUser("nonexistent");
+  await client.getUser("987654321098765432");
 } catch (err) {
   if (err instanceof SnippError) {
-    console.error(err.status, err.message);
+    if (err.body?.suspended) {
+      console.error(`${err.body.username} is suspended`);
+    } else {
+      console.error(err.status, err.message);
+    }
   }
 }
 ```
