@@ -16,6 +16,7 @@ Fetch either your own profile (`@me`) or another user's public profile.
 - `postsLimit` limits `publicUploads` to `1` to `50` (default `50`).
 - Non-self profiles include a `blockedByYou` boolean indicating whether you have blocked that user.
 - If the target user has blocked **you**, the endpoint returns `403` with `"You have been blocked by this user."`.
+- If the target user is suspended, the endpoint returns `403` with `suspended: true` and their `username`, and no profile fields. This is checked before the block check.
 
 ## Examples
 
@@ -127,5 +128,15 @@ A non-self request returns a public-safe profile with `blockedByYou` and (by def
       }
     ]
   }
+}
+```
+
+A suspended user returns `403` with no profile fields.
+
+```json
+{
+  "error": "This user has been suspended indefinitely for violating our Terms of Service.",
+  "suspended": true,
+  "username": "playertwo"
 }
 ```

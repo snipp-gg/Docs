@@ -181,6 +181,30 @@
               }
             }
           },
+          "403": {
+            "description": "User is suspended, or the user has blocked you",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "suspended": {
+                      "type": "boolean",
+                      "description": "Present and true when the user has been suspended"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Present only alongside suspended"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "404": {
             "description": "User not found",
             "content": {
