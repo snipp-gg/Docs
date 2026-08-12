@@ -683,7 +683,7 @@
             "name": "include-metadata",
             "in": "header",
             "required": false,
-            "description": "By default, Snipp strips metadata (camera, GPS location, timestamp) to protect your privacy: EXIF from PNG, JPG, and WebP images, and container metadata from videos during the MP4 remux. Set to `true` to keep the original metadata.",
+            "description": "By default, Snipp strips metadata (camera, GPS location, timestamp) to protect your privacy: metadata is removed from PNG, JPG, WebP and GIF images at any size without re-encoding, and container metadata is removed from videos during the MP4 remux. Set to `true` to keep the original metadata.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -1326,7 +1326,7 @@
             "name": "include-metadata",
             "in": "header",
             "required": false,
-            "description": "By default, Snipp strips metadata (camera, GPS location, timestamp) to protect your privacy: EXIF from PNG, JPG, and WebP images, and container metadata from videos during the MP4 remux. Set to `true` to keep the original metadata.",
+            "description": "By default, Snipp strips metadata (camera, GPS location, timestamp) to protect your privacy: metadata is removed from PNG, JPG, WebP and GIF images at any size without re-encoding, and container metadata is removed from videos during the MP4 remux. Set to `true` to keep the original metadata.",
             "schema": {
               "type": "boolean",
               "default": false
