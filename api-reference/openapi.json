@@ -838,6 +838,20 @@
                                 "enum": [
                                   "failed"
                                 ]
+                              },
+                              "quota": {
+                                "type": "integer",
+                                "description": "Weekly byte quota. Present only when the file was rejected by the weekly usage limit."
+                              },
+                              "used": {
+                                "type": "integer",
+                                "description": "Bytes already used in the current window. Present only when the file was rejected by the weekly usage limit."
+                              },
+                              "resetsAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true,
+                                "description": "When the current window resets. Present only when the file was rejected by the weekly usage limit."
                               }
                             }
                           }
@@ -1447,6 +1461,20 @@
                             "enum": [
                               "failed"
                             ]
+                          },
+                          "quota": {
+                            "type": "integer",
+                            "description": "Weekly byte quota. Present only when the file was rejected by the weekly usage limit."
+                          },
+                          "used": {
+                            "type": "integer",
+                            "description": "Bytes already used in the current window. Present only when the file was rejected by the weekly usage limit."
+                          },
+                          "resetsAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "description": "When the current window resets. Present only when the file was rejected by the weekly usage limit."
                           }
                         }
                       }
