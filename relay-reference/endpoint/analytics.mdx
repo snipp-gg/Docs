@@ -8,7 +8,7 @@ Fetch your own analytics: posts, uploads, data uploaded, comments received, like
 ## Behavior
 
 - Authenticated with your `relay-key`. Returns analytics for the key's owner only.
-- Requires an active Plus subscription. Without it the endpoint returns `403`.
+- Requires an active PLUS subscription. Without it the endpoint returns `403`.
 - `range` selects the window for `series` and `deltas`. Valid values are 7, 30, 90 and 365. It defaults to 30 if omitted or invalid. `buckets` are always today, last 7 days and last 30 days regardless of `range`.
 - `series` arrays have one entry per day across the window, oldest first, including days with no activity (value `0`).
 - `totals` are lifetime. `totals.views` is the sum of views across all your posts.

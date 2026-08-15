@@ -1,13 +1,13 @@
 ---
 title: "Plans"
-description: "Compare Free, Plus, and Enterprise plan features and limits."
+description: "Compare Free, PLUS, and Enterprise plan features and limits."
 ---
 
 ## Plan Tiers
 
 Snipp offers three tiers to suit different needs. All plans include full API access.
 
-| | Free | Plus | Enterprise |
+| | Free | PLUS | Enterprise |
 |--|------|------|------------|
 | **Price** | Free | $4.99/mo | $49/mo |
 | **Max File Size** | 50 MB | No per-file limit | No per-file limit |
@@ -16,7 +16,7 @@ Snipp offers three tiers to suit different needs. All plans include full API acc
 | **Priority Streaming** | 10 min/month | 100 min/month | 100 min/month |
 | **API Access** | Yes | Yes | Yes |
 | **Teams** | No | No | Yes |
-| **Plus Badge** | No | Yes | Yes |
+| **PLUS Badge** | No | Yes | Yes |
 | **Priority Support** | No | Yes | Yes |
 
 ## Weekly Usage Limit
@@ -38,7 +38,7 @@ Each plan gets a monthly budget of priority minutes:
 | Plan | Priority Minutes |
 |------|------------------|
 | Free | 10 minutes/month |
-| Plus | 100 minutes/month |
+| PLUS | 100 minutes/month |
 | Enterprise | 100 minutes/month |
 
 A video's **duration** counts against the budget, not its file size. Only videos use priority minutes; images never do.
@@ -87,11 +87,11 @@ Call `GET /users/@me` to see your current plan status and weekly storage usage. 
 
 | Field | Description |
 |-------|-------------|
-| `plus` | `true` if you have an active Plus subscription |
+| `plus` | `true` if you have an active PLUS subscription |
 | `enterprise` | `true` if you have an Enterprise plan |
 | `uploads` | Total number of files you have uploaded |
 | `limits.plan` | Active plan (`free`, `plus`, or `enterprise`) |
-| `limits.maxFileSize` | Maximum size per file in bytes. `null` on Plus and Enterprise (no per-file limit; only weekly quota applies) |
+| `limits.maxFileSize` | Maximum size per file in bytes. `null` on PLUS and Enterprise (no per-file limit; only weekly quota applies) |
 | `limits.usage.used` | Bytes uploaded in the current window |
 | `limits.usage.limit` | Total bytes allowed per window |
 | `limits.usage.usedPercent` | Percentage of the weekly cap consumed, rounded to the nearest integer (0–100+) |
@@ -115,7 +115,7 @@ Each team has a single **access key**. Anyone holding it can upload to the team 
 
 ## Upgrading
 
-You can upgrade to Plus anytime from the [pricing page](https://snipp.gg/plus) or your account settings. Your new limits take effect immediately.
+You can upgrade to PLUS anytime from the [pricing page](https://snipp.gg/plus) or your account settings. Your new limits take effect immediately.
 
 For Enterprise plans, reach out to [support@snipp.gg](mailto:support@snipp.gg).
 
@@ -123,4 +123,4 @@ For Enterprise plans, reach out to [support@snipp.gg](mailto:support@snipp.gg).
 
 - Your existing uploads remain accessible regardless of plan changes.
 - Files that exceed your new plan's size limit cannot be re-uploaded if deleted.
-- Plus features such as the Plus badge are removed at the end of your billing period.
+- PLUS features such as the PLUS badge are removed at the end of your billing period.

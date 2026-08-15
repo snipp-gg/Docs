@@ -3529,7 +3529,7 @@
     "/analytics": {
       "get": {
         "summary": "Get Analytics",
-        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus lifetime totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active Plus subscription. All dates are UTC.",
+        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus lifetime totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active PLUS subscription. All dates are UTC.",
         "operationId": "getAnalytics",
         "parameters": [
           {
@@ -4183,7 +4183,7 @@
             }
           },
           "403": {
-            "description": "Forbidden. The account is suspended or is not a Plus subscriber.",
+            "description": "Forbidden. The account is suspended or is not a PLUS subscriber.",
             "content": {
               "application/json": {
                 "schema": {
