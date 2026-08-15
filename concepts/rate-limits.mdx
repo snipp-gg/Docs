@@ -5,7 +5,7 @@ description: "Understand request limits across the API and Relay, and how to han
 
 ## Overview
 
-Rate limits protect Snipp from abuse and keep performance consistent for everyone. Limits apply per user, per endpoint, except where two endpoints are marked as sharing a bucket below.
+Rate limits protect Snipp from abuse and keep performance consistent for everyone. Limits apply per user, per endpoint, except where endpoints are marked as sharing a bucket below.
 
 ## API Limits
 
@@ -37,8 +37,8 @@ The Relay API matches the limits above for shared endpoints, with these addition
 | `POST /unblock` | 10 requests | Per minute |
 | `POST /follow` | 30 requests | Per minute |
 | `POST /unfollow` | 30 requests | Per minute |
-| `GET /followers` | 30 requests | Per minute |
-| `GET /following` | 30 requests | Per minute |
+| `GET /followers` | 30 requests | Per minute, shared with `GET /following` |
+| `GET /following` | 30 requests | Per minute, shared with `GET /followers` |
 | `PATCH /profile` | 10 requests | Per minute |
 | `POST /profile/avatar` | 10 requests | Per minute |
 | `POST /profile/banner` | 10 requests | Per minute |
@@ -49,11 +49,11 @@ The Relay API matches the limits above for shared endpoints, with these addition
 | `DELETE /comment` | 5 requests | Per minute, shared with `POST /comment` |
 | `POST /comment-like` | 30 requests | Per minute, shared with `POST /like` |
 | `POST /report-comment` | 3 requests | Per minute, shared with `POST /report-post` and `POST /report-user` |
-| `GET /notifications` | 60 requests | Per minute |
-| `GET /notifications/unread` | 60 requests | Per minute |
-| `POST /notifications/read` | 60 requests | Per minute |
-| `GET /notification-prefs` | 20 requests | Per minute |
-| `POST /notification-prefs` | 20 requests | Per minute |
+| `GET /notifications` | 60 requests | Per minute, shared with `GET /notifications/unread` and `POST /notifications/read` |
+| `GET /notifications/unread` | 60 requests | Per minute, shared with `GET /notifications` and `POST /notifications/read` |
+| `POST /notifications/read` | 60 requests | Per minute, shared with `GET /notifications` and `GET /notifications/unread` |
+| `GET /notification-prefs` | 20 requests | Per minute, shared with `POST /notification-prefs` |
+| `POST /notification-prefs` | 20 requests | Per minute, shared with `GET /notification-prefs` |
 
 `GET /posts/{code}` and `GET /discover` on Relay automatically count views per post. Views are deduplicated per IP and post: up to 3 counted views per IP per post per hour.
 
