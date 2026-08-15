@@ -2286,7 +2286,7 @@
             }
           },
           "403": {
-            "description": "Cannot like (suspended, moderated, or blocked by author)",
+            "description": "Cannot like (suspended, moderated, team post, or blocked by author)",
             "content": {
               "application/json": {
                 "schema": {
