@@ -55,7 +55,7 @@ user = client.get_user("@me", include_posts=True, posts_limit=10)
 
 ### `get_post(code)`
 
-Fetch a post by its share code.
+Fetch a post by its share code. Team posts are only readable by members of that team, and omit `likeCount`.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|

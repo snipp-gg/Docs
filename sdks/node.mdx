@@ -57,7 +57,7 @@ const user = await client.getUser("@me", { includePosts: true, postsLimit: 10 })
 
 ### `getPost(code)`
 
-Fetch a post by its share code.
+Fetch a post by its share code. Team posts are only readable by members of that team, and omit `likeCount`.
 
 ```javascript
 const post = await client.getPost("AbCd1234");

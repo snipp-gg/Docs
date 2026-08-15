@@ -68,7 +68,7 @@ let user = client.get_user("@me", Some(opts)).await?;
 
 ### `get_post(code)`
 
-Fetch a post by its share code.
+Fetch a post by its share code. Team posts are only readable by members of that team, and carry no `like_count`.
 
 ```rust
 let post = client.get_post("AbCd1234").await?;

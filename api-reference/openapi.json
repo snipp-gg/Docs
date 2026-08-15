@@ -343,7 +343,7 @@
                         },
                         "likeCount": {
                           "type": "integer",
-                          "description": "Total likes on the post."
+                          "description": "Total likes on the post. Omitted on team posts, which cannot be liked."
                         },
                         "commentCount": {
                           "type": "integer",
