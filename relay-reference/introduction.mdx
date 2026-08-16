@@ -50,7 +50,7 @@ A missing, empty, or unrecognized relay key returns `401`.
 
 ### Team Access Keys
 
-[Teams](/concepts/plans#teams) (an Enterprise feature) each have a dedicated **access key**. Pass it in the `relay-key` header in place of a personal relay key, and uploads go to the team's shared gallery instead of a personal account. It works on `/upload`, `/appendUpload`, `/editUpload`, and `/deleteUpload`; every other endpoint is personal only and returns `401` for a team key.
+[Teams](/concepts/plans#teams) (an Ultra feature) each have a dedicated **access key**. Pass it in the `relay-key` header in place of a personal relay key, and uploads go to the team's shared gallery instead of a personal account. It works on `/upload`, `/appendUpload`, `/editUpload`, and `/deleteUpload`; every other endpoint is personal only and returns `401` for a team key.
 
 ```
 relay-key: YOUR_TEAM_ACCESS_KEY

@@ -52,7 +52,7 @@ curl -X GET "https://relay.snipp.gg/users/USER_ID?includePosts=true&postsLimit=1
     "bio": "Building things at Snipp",
     "socials": { "github": "https://github.com/playerone" },
     "plus": true,
-    "enterprise": false,
+    "ultra": false,
     "verified": false,
     "staff": false,
     "partner": false,
@@ -96,7 +96,7 @@ Returned only on `@me`. Describes the user's current plan and how they got it.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `plan` | `"free" \| "plus" \| "enterprise"` | Current effective plan. |
+| `plan` | `"free" \| "plus" \| "ultra"` | Current effective plan. |
 | `status` | string \| null | `active`, `trialing`, `past_due`, `canceled`, `expired`, `incomplete`, or `gifted` for redeemed/comp'd accounts. `null` for free users. |
 | `started_at` | timestamp \| null | When the paid subscription began. `null` for free plans, and for gifted plans with no subscription behind them. |
 | `expires_at` | timestamp \| null | When access ends. For renewing subscriptions this is the next billing date. For gifted plans it is when the gift ends, which is also when a subscription bought during the gift starts billing. `null` means no fixed expiry (e.g. permanent comp). |
@@ -116,7 +116,7 @@ A non-self request returns a public-safe profile with `blockedByYou`, `following
     "bio": null,
     "socials": null,
     "plus": false,
-    "enterprise": false,
+    "ultra": false,
     "verified": false,
     "staff": false,
     "partner": false,

@@ -88,7 +88,7 @@
                         "apiKey": "aB3xK9mP2qR7sT1vW4yZ6cD8fG0hJ5kL",
                         "keyHasUploadsAccess": true,
                         "plus": true,
-                        "enterprise": false,
+                        "ultra": false,
                         "verified": true,
                         "staff": false,
                         "partner": false,
@@ -135,7 +135,7 @@
                           "x": "snippgg"
                         },
                         "plus": true,
-                        "enterprise": false,
+                        "ultra": false,
                         "verified": true,
                         "staff": false,
                         "partner": false,
@@ -2678,7 +2678,7 @@
           "plus": {
             "type": "boolean"
           },
-          "enterprise": {
+          "ultra": {
             "type": "boolean"
           },
           "verified": {
@@ -2738,7 +2738,7 @@
         "required": [
           "id",
           "plus",
-          "enterprise",
+          "ultra",
           "verified",
           "staff",
           "partner",
@@ -2795,7 +2795,7 @@
             "enum": [
               "free",
               "plus",
-              "enterprise"
+              "ultra"
             ],
             "description": "Active plan."
           },
@@ -2804,7 +2804,7 @@
               "integer",
               "null"
             ],
-            "description": "Maximum size per file in bytes. 50 MB on free. `null` on plus and enterprise (no per-file limit; only weekly quota applies)."
+            "description": "Maximum size per file in bytes. 50 MB on free. `null` on plus and ultra (no per-file limit; only weekly quota applies)."
           },
           "usage": {
             "type": "object",
@@ -2816,7 +2816,7 @@
               },
               "limit": {
                 "type": "integer",
-                "description": "Total bytes allowed per window. 2 GB free, 20 GB plus, 50 GB enterprise."
+                "description": "Total bytes allowed per window. 2 GB free, 20 GB plus, 50 GB ultra."
               },
               "usedPercent": {
                 "type": "number",
