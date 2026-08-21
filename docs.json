@@ -98,6 +98,7 @@
             "group": "Uploads",
             "pages": [
               "api-reference/endpoint/upload",
+              "api-reference/endpoint/convert",
               "api-reference/endpoint/uploads",
               "api-reference/endpoint/edit",
               "api-reference/endpoint/append",
@@ -142,6 +143,7 @@
             "group": "Uploads",
             "pages": [
               "relay-reference/endpoint/upload",
+              "relay-reference/endpoint/convert",
               "relay-reference/endpoint/uploads",
               "relay-reference/endpoint/edit",
               "relay-reference/endpoint/append",

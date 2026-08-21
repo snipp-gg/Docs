@@ -964,6 +964,156 @@
         }
       }
     },
+    "/convert": {
+      "post": {
+        "summary": "Convert a File",
+        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at 50 MB on the free plan and 200 MB on Snipp+ and Ultra, and video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
+        "operationId": "convertFile",
+        "parameters": [
+          {
+            "name": "convert-target",
+            "in": "header",
+            "required": true,
+            "description": "The format to convert the file to.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "png",
+                "jpeg",
+                "webp",
+                "avif",
+                "gif",
+                "mp4",
+                "mp3"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to convert. Only the first file is read."
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The converted file, returned as an attachment.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No file uploaded, unsupported source type, invalid target, or that source cannot become that target.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Account suspended, or Snipp+ is required for video to GIF.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File is over your plan's convert limit (50 MB free, 200 MB on Snipp+ and Ultra).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded. 10 conversions per minute.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The conversion failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/uploads": {
       "get": {
         "summary": "List Uploads",
