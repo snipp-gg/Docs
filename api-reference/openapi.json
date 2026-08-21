@@ -967,7 +967,7 @@
     "/convert": {
       "post": {
         "summary": "Convert a File",
-        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at 50 MB on the free plan and 200 MB on Snipp+ and Ultra, and video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
+        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at your plan's weekly storage allowance, the same ceiling upload uses, and video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
         "operationId": "convertFile",
         "parameters": [
           {
@@ -1067,7 +1067,7 @@
             }
           },
           "413": {
-            "description": "File is over your plan's convert limit (50 MB free, 200 MB on Snipp+ and Ultra).",
+            "description": "File is over your plan's convert limit.",
             "content": {
               "application/json": {
                 "schema": {
