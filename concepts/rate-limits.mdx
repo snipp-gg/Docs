@@ -22,6 +22,7 @@ Rate limits protect Snipp from abuse and keep performance consistent for everyon
 | `GET /usage-history` | 30 requests | Per minute |
 | `GET /analytics` | 30 requests | Per minute |
 | `GET /gifs` | 60 requests per IP | Per minute |
+| `POST /convert` | 10 requests | Per minute |
 
 `POST /upload` also has an abuse safeguard. Sending more than 10 uploads within one second suspends your account. Suspended accounts lose upload access and must contact support to appeal. Team API keys are throttled with a `429` instead of being suspended.
 
@@ -88,7 +89,9 @@ The rate limit headers are still included on `429` responses so you know when to
 
 Separate from per-endpoint rate limits, every account has a [weekly usage limit](/concepts/plans#weekly-usage-limit). Files that would push you over the limit are rejected before they are stored. The exact response shape depends on the endpoint:
 
-- `POST /upload` and `POST /appendUpload` return `200` with the rejected file moved to the `failed` array. Each entry includes `error: "Weekly usage limit exceeded."`, plus `quota`, `used`, and `resetsAt`.
+- `POST /upload` and `POST /appendUpload` return `200` with the rejected file moved to the `failed` array when at least one other file was stored. Each entry includes `error: "Weekly usage limit exceeded."`, plus `quota`, `used`, and `resetsAt`.
+- When every file in the request is rejected, the status is `400`. A multi-file request returns `error: "All files failed to upload."` alongside the same `failed` array; a single-file request returns the reason at the top level with `quota`, `used` and `resetsAt` beside it.
+- A single-file `POST /upload` on a personal key is the exception. Its quota is reserved during the insert, so it returns `400` with `error: "Weekly usage limit exceeded."` and no quota fields.
 - The Website internal chunked-upload route returns `413` with the same fields at the top level.
 - The Website internal `/api/v1/album` route moves the rejected file to the `failed` array like `/upload`: `200` when at least one file was stored, `400` when every file failed. The fields sit at the top level only when a single file was sent.
 

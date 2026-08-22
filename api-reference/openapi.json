@@ -214,16 +214,6 @@
                 }
               }
             }
-          },
-          "429": {
-            "description": "Rate limit exceeded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
           }
         }
       }
@@ -967,7 +957,7 @@
     "/convert": {
       "post": {
         "summary": "Convert a File",
-        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at your plan's weekly storage allowance, the same ceiling upload uses, and video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
+        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at 50 MB on the free plan, and Snipp+ and Ultra have no per-file cap, the same as upload. Video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
         "operationId": "convertFile",
         "parameters": [
           {
@@ -1502,7 +1492,7 @@
                   "file": {
                     "type": "string",
                     "format": "binary",
-                    "description": "1 or more image or video files. Use multiple `file` fields for multi-file appends. Total file count after append cannot exceed 9."
+                    "description": "1 or more image or video files. Use multiple `file` fields for multi-file appends. Total file count after append cannot exceed 50."
                   }
                 }
               }
@@ -1710,7 +1700,7 @@
     "/report-post": {
       "post": {
         "summary": "Report Post",
-        "description": "Report a post for violating community guidelines. The post must be public and not your own. Reports are reviewed by the moderation team.",
+        "description": "Report a post for violating community guidelines. The post must not be private or a draft, and not your own. Reports are reviewed by the moderation team.",
         "operationId": "reportPost",
         "requestBody": {
           "required": true,
@@ -1923,7 +1913,8 @@
                     },
                     "country": {
                       "type": "string",
-                      "description": "Country name mapped from the region code. Omitted if no mapping is available."
+                      "description": "Country name mapped from the region code. `null` if no mapping is available.",
+                      "nullable": true
                     },
                     "label": {
                       "type": "string",
@@ -2086,7 +2077,7 @@
     "/analytics": {
       "get": {
         "summary": "Get Analytics",
-        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus lifetime totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active PLUS subscription. All dates are UTC.",
+        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active PLUS subscription. All dates are UTC.",
         "operationId": "getAnalytics",
         "parameters": [
           {
@@ -2231,7 +2222,7 @@
                         },
                         "totals": {
                           "type": "object",
-                          "description": "Lifetime totals.",
+                          "description": "Totals. `posts` and `views` are lifetime; `comments`, `likes` and `bytes` cover the fetch window only, which is twice the selected range with a floor of 30 days.",
                           "properties": {
                             "posts": {
                               "type": "integer",
@@ -2243,15 +2234,15 @@
                             },
                             "comments": {
                               "type": "integer",
-                              "description": "Total comments received on your posts."
+                              "description": "Comments received on your posts within the fetch window."
                             },
                             "likes": {
                               "type": "integer",
-                              "description": "Total likes received on your posts."
+                              "description": "Likes received on your posts within the fetch window."
                             },
                             "bytes": {
                               "type": "integer",
-                              "description": "Total bytes uploaded."
+                              "description": "Bytes uploaded within the fetch window."
                             }
                           }
                         },

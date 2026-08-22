@@ -197,16 +197,6 @@
                 }
               }
             }
-          },
-          "429": {
-            "description": "Rate limit exceeded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
           }
         }
       }
@@ -986,7 +976,7 @@
     "/convert": {
       "post": {
         "summary": "Convert a File",
-        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at your plan's weekly storage allowance, the same ceiling upload uses, and video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
+        "description": "Convert one image or video to another format and get the converted file back in the response. Nothing is stored and no upload quota is consumed. Send the file as multipart/form-data and name the target format in the `convert-target` header. Images can become png, jpeg, webp, avif or gif; GIFs can become png, jpeg, webp, avif or mp4; videos can become mp4, mp3 or gif. Video to GIF requires Snipp+. Files are capped at 50 MB on the free plan, and Snipp+ and Ultra have no per-file cap, the same as upload. Video to GIF is limited to the first 10 seconds. Metadata is stripped from every converted file.",
         "operationId": "convertFile",
         "parameters": [
           {
@@ -1176,6 +1166,10 @@
                           "url": {
                             "type": "string"
                           },
+                          "thumbnailUrl": {
+                            "type": "string",
+                            "description": "Thumbnail URL for video posts. Omitted when the post has no thumbnail."
+                          },
                           "title": {
                             "type": "string",
                             "nullable": true,
@@ -1217,7 +1211,7 @@
             }
           },
           "403": {
-            "description": "Account suspended or no permission to access recent uploads",
+            "description": "Account suspended.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1328,7 +1322,7 @@
     "/editUpload": {
       "patch": {
         "summary": "Edit Upload",
-        "description": "Edit an existing upload's title, description, or privacy level. You must own the upload.",
+        "description": "Edit an existing upload's title, description, privacy level, or priority streaming. You must own the upload, or be a member of the owning team with a role other than viewer.",
         "operationId": "editUpload",
         "parameters": [
           {
@@ -1351,6 +1345,19 @@
                 "public",
                 "unlisted",
                 "private"
+              ]
+            }
+          },
+          {
+            "name": "priority",
+            "in": "header",
+            "required": false,
+            "description": "Toggle priority (adaptive) streaming for the post's videos. Returns 403 when no priority minutes remain.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
               ]
             }
           }
@@ -1410,6 +1417,10 @@
                             "unlisted",
                             "private"
                           ]
+                        },
+                        "priority": {
+                          "type": "boolean",
+                          "description": "Whether the post's videos are on priority (adaptive) streaming after the edit."
                         }
                       }
                     }
@@ -1439,7 +1450,7 @@
             }
           },
           "403": {
-            "description": "No permission to edit uploads, not the owner, post is moderated, or post is restricted and cannot be made public",
+            "description": "Not your upload, a restricted post cannot be made public, or no priority minutes remain.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1517,7 +1528,7 @@
                   "file": {
                     "type": "string",
                     "format": "binary",
-                    "description": "1 or more image or video files. Use multiple `file` fields for multi-file appends. Total file count after append cannot exceed 9."
+                    "description": "1 or more image or video files. Use multiple `file` fields for multi-file appends. Total file count after append cannot exceed 50."
                   }
                 }
               }
@@ -1869,6 +1880,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Account suspended.",
             "content": {
               "application/json": {
                 "schema": {
@@ -3205,7 +3226,7 @@
     "/report-post": {
       "post": {
         "summary": "Report Post",
-        "description": "Report a post for violating community guidelines. The post must be public and not your own. Reports are reviewed by the moderation team.",
+        "description": "Report a post for violating community guidelines. The post must not be private or a draft, and not your own. Reports are reviewed by the moderation team.",
         "operationId": "reportPost",
         "requestBody": {
           "required": true,
@@ -3516,7 +3537,8 @@
                     },
                     "country": {
                       "type": "string",
-                      "description": "Country name mapped from the region code. Omitted if no mapping is available."
+                      "description": "Country name mapped from the region code. `null` if no mapping is available.",
+                      "nullable": true
                     },
                     "label": {
                       "type": "string",
@@ -3679,7 +3701,7 @@
     "/analytics": {
       "get": {
         "summary": "Get Analytics",
-        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus lifetime totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active PLUS subscription. All dates are UTC.",
+        "description": "Returns the authenticated user's own analytics: posts, uploads, data uploaded, comments received, likes received and followers gained over time, plus totals. This is the data behind the Analytics page in the Snipp Console, exposed so you can rebuild it yourself. Requires an active PLUS subscription. All dates are UTC.",
         "operationId": "getAnalytics",
         "parameters": [
           {
@@ -3824,7 +3846,7 @@
                         },
                         "totals": {
                           "type": "object",
-                          "description": "Lifetime totals.",
+                          "description": "Totals. `posts` and `views` are lifetime; `comments`, `likes` and `bytes` cover the fetch window only, which is twice the selected range with a floor of 30 days.",
                           "properties": {
                             "posts": {
                               "type": "integer",
@@ -3836,15 +3858,15 @@
                             },
                             "comments": {
                               "type": "integer",
-                              "description": "Total comments received on your posts."
+                              "description": "Comments received on your posts within the fetch window."
                             },
                             "likes": {
                               "type": "integer",
-                              "description": "Total likes received on your posts."
+                              "description": "Likes received on your posts within the fetch window."
                             },
                             "bytes": {
                               "type": "integer",
-                              "description": "Total bytes uploaded."
+                              "description": "Bytes uploaded within the fetch window."
                             }
                           }
                         },
@@ -4417,6 +4439,16 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -4444,6 +4476,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
             "content": {
               "application/json": {
                 "schema": {
@@ -4485,6 +4527,16 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -4507,6 +4559,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
             "content": {
               "application/json": {
                 "schema": {
@@ -4544,6 +4606,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
             "content": {
               "application/json": {
                 "schema": {
@@ -5151,7 +5223,8 @@
               "monetized",
               "demonetized",
               "payout_sent",
-              "payout_failed"
+              "payout_failed",
+              "report_received"
             ]
           },
           "postCode": {

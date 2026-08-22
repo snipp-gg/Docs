@@ -125,11 +125,11 @@ Album (two or more files, default): one `post` containing every file.
 }
 ```
 
-Individual (`post-type: individual`): one entry in `post.posts` per file. If a file fails, a `failed` array is included alongside `files`.
+Individual (`post-type: individual`): one entry in `post.posts` per file. If a file fails, a `failed` array is included alongside `files` and the message counts what landed.
 
 ```json
 {
-  "message": "Upload successful!",
+  "message": "1 of 2 files uploaded successfully.",
   "files": [
     {
       "index": 0,
